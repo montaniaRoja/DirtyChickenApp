@@ -89,11 +89,11 @@ public class RegistrarCliente extends AppCompatActivity {
                 // Obtener la respuesta del servidor
                 int responseCode = urlConnection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // La solicitud fue exitosa
+
                     InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                    // Leer la respuesta del servidor si es necesario
+
                 } else {
-                    // La solicitud falló, puedes manejar el error según tus necesidades
+
                 }
 
                 urlConnection.disconnect();
