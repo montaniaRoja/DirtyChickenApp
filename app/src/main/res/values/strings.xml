@@ -3,4 +3,5 @@
     <string name="ErrorDB">error al guardar los datos localmente</string>
     <string name="ErrorResp">error al guardar localmente</string>
     <string name="Respuesta">datos de cliente creados</string>
+    <string name="RespuestaTemp">Bienvenido de Nuevo !!</string>
 </resources>
