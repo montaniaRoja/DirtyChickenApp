@@ -1,52 +1,38 @@
 package com.example.dirtychickenapp.database;
-import android.app.AlertDialog;
-import android.widget.Toast;
 
-import com.example.dirtychickenapp.objetos.Cliente;
+public class Transacciones
+{
+    // Nombre de la base de datos
+    public static final String nameDB = "dbrestaurantepm";
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-public class Transacciones {
-
-    public static void guardarCliente(Cliente cliente)  {
-        try {
-            Connection resultado = Conexion.conectarse();
-            String nombre = cliente.getNombre();
-            String tel = cliente.getTelefono();
-            String direccion = cliente.getDireccion();
-            String correo = cliente.getCorreo();
-            Double lat = cliente.getLatitud();
-            Double lon = cliente.getLongitud();
+    //Tablas de la base de datos
+    public static final String Tabla1  = "clientes";
 
 
-            String sqlString = "INSERT INTO clientes (nombre_cliente, tel_cliente, dir_cliente,lat_cliente,long_cliente, correo_cliente) VALUES (?, ?,?,?,?,?);";
+    // Campos de la tabla
+    public static final String id_cliente = "id_cliente";
 
-            PreparedStatement stmt = resultado.prepareStatement(sqlString);
-
-            stmt.setString(1, nombre);
-            stmt.setString(2, tel);
-            stmt.setString(3, direccion);
-            stmt.setDouble(4, lat);
-            stmt.setDouble(5, lon);
-            stmt.setString(6, correo);
-            int filas = stmt.executeUpdate();
-
-            if (filas == 0) {
+    public static final String nombre_cliente = "nombre_cliente";
+    public static final String tel_cliente = "tel_cliente";
+    public static final String dir_cliente = "dir_cliente";
+    public static final String lat_cliente = "lat_cliente";
+    public static final String long_cliente = "long_cliente";
+    public static final String correo_cliente = "correo_cliente";
+    public static final String DeleteContact = "DELETE FROM " + Transacciones.Tabla1 + " WHERE " + Transacciones.id_cliente + " = ?";
 
 
-            }
-
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+    // Consultas de Base de datos
+    //ddl
 
 
-        }
+    public static final String CreateTableClientes = "CREATE TABLE clientes " +
+            "( id INTEGER PRIMARY KEY AUTOINCREMENT,nombre_cliente varchar(100),tel_cliente varchar(100),dir_cliente varchar(200),lat_cliente varchar(100), long_cliente varchar(100), correo_cliente varchar(100))";
 
 
-    }
+    public static final String DropTableClientes  = "DROP TABLE IF EXISTS clientes";
+
+    public static final String SelectTableClientes = "SELECT * FROM " + Transacciones.Tabla1;
+
 
 
 

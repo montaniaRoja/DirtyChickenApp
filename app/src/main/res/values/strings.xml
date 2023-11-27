@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">DirtyChickenApp</string>
+    <string name="ErrorDB">error al guardar los datos localmente</string>
+    <string name="ErrorResp">error al guardar localmente</string>
+    <string name="Respuesta">datos de cliente creados</string>
 </resources>

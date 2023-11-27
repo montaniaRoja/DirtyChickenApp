@@ -1,16 +1,30 @@
 package com.example.dirtychickenapp.pantallas;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
 
-import com.example.dirtychickenapp.database.Transacciones;
-import com.example.dirtychickenapp.objetos.Cliente;
-import com.example.dirtychickenapp.database.Transacciones;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteException;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 
 import com.example.dirtychickenapp.R;
+import com.example.dirtychickenapp.database.SQLiteConexion;
+import com.example.dirtychickenapp.database.Transacciones;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,11 +57,76 @@ public class RegistrarCliente extends AppCompatActivity {
         txtLatitud=findViewById(R.id.txtLatitud);
         txtLongitud=findViewById(R.id.txtLongitud);
         btnGuardarCliente=(Button)findViewById(R.id.btnGuardarCliente);
-        btnGuardarCliente.setOnClickListener(e->guardarCliente());
+
+        btnGuardarCliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                permisos();
+            }
+        });
 
     }
 
-    private void guardarCliente() {
+    private void permisos() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+        } else {
+            //getLocation();
+            guardarClienteMysql();
+            guardarClienteLocal();
+            txtNombre.setText("");
+            txtPhone.setText("");
+            txtDireccion.setText("");
+            txtCorreo.setText("");
+            txtLatitud.setText("");
+            txtLongitud.setText("");
+
+            Intent intent=new Intent(RegistrarCliente.this, MainActivity.class);
+            startActivity(intent);
+        }
+
+    }
+
+
+    private void guardarClienteLocal() {
+        String nombre = txtNombre.getText().toString();
+        String telefono=txtPhone.getText().toString();
+        String direccion = txtDireccion.getText().toString();
+        String latitud = txtLatitud.getText().toString();
+        String longitud = txtLongitud.getText().toString();
+        String correo = txtCorreo.getText().toString();
+
+
+        try {
+
+            SQLiteConexion conexion = new SQLiteConexion(this, Transacciones.nameDB, null, 1);
+            SQLiteDatabase db = conexion.getWritableDatabase();
+
+            ContentValues valores = new ContentValues();
+            valores.put(Transacciones.nombre_cliente, nombre);
+            valores.put(Transacciones.tel_cliente, telefono);
+            valores.put(Transacciones.dir_cliente, direccion);
+            valores.put(Transacciones.lat_cliente, latitud);
+            valores.put(Transacciones.long_cliente, longitud);
+            valores.put(Transacciones.correo_cliente, correo);
+
+            Long Result = db.insert(Transacciones.Tabla1, Transacciones.id_cliente, valores);
+
+            Toast.makeText(this, getString(R.string.Respuesta), Toast.LENGTH_SHORT).show();
+            db.close();
+
+
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.ErrorDB), Toast.LENGTH_SHORT).show();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            Toast.makeText(this, getString(R.string.ErrorResp), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void guardarClienteMysql() {
         // Obtener los datos de los EditText
         String nombre = txtNombre.getText().toString();
         String direccion = txtDireccion.getText().toString();
@@ -101,6 +180,81 @@ public class RegistrarCliente extends AppCompatActivity {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    private void getLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (locationManager != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new android.location.LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+
+                    txtLatitud.setText(String.valueOf(latitude));
+                    txtLongitud.setText(String.valueOf(longitude));
+                    locationManager.removeUpdates(this);
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+                }
+            });
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 102 && resultCode == RESULT_OK) {
+
+            checkLocationPermission();
+
+        }
+    }
+
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request the permission.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            // Permission has already been granted.
+
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with getting the location.
+                //getLocation();
+            } else {
+                // Permission denied, handle accordingly.
+                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }
