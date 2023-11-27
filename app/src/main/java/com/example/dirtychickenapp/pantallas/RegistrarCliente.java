@@ -57,36 +57,33 @@ public class RegistrarCliente extends AppCompatActivity {
         txtLatitud=findViewById(R.id.txtLatitud);
         txtLongitud=findViewById(R.id.txtLongitud);
         btnGuardarCliente=(Button)findViewById(R.id.btnGuardarCliente);
+        getLocation();
+
 
         btnGuardarCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                permisos();
+                guardarCliente();
             }
         });
 
     }
 
-    private void permisos() {
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-        } else {
-            //getLocation();
-            guardarClienteMysql();
-            guardarClienteLocal();
-            txtNombre.setText("");
-            txtPhone.setText("");
-            txtDireccion.setText("");
-            txtCorreo.setText("");
-            txtLatitud.setText("");
-            txtLongitud.setText("");
+    private void guardarCliente() {
+        guardarClienteMysql();
+        guardarClienteLocal();
+        txtNombre.setText("");
+        txtPhone.setText("");
+        txtDireccion.setText("");
+        txtCorreo.setText("");
+        txtLatitud.setText("");
+        txtLongitud.setText("");
 
-            Intent intent=new Intent(RegistrarCliente.this, MainActivity.class);
-            startActivity(intent);
-        }
+        Intent intent=new Intent(RegistrarCliente.this, MainActivity.class);
+        startActivity(intent);
 
     }
+
 
 
     private void guardarClienteLocal() {
