@@ -1,14 +1,18 @@
 package com.example.dirtychickenapp.pantallas;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import com.example.dirtychickenapp.database.SQLiteConexion;
 import com.example.dirtychickenapp.database.Transacciones;
@@ -26,23 +30,72 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Button btnRegistro;
-    //Button btnIngreso;
+    Button btnOrdenar;
+    Button btnCerrar;
     SQLiteConexion conexion;
     ArrayList<Cliente> listClientes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //btnRegistro=(Button)findViewById(R.id.btnRegistro);
-        //btnIngreso=(Button)findViewById(R.id.btnIngreso);
+        btnOrdenar=(Button)findViewById(R.id.btnOrdenar);
+        btnCerrar=(Button)findViewById(R.id.btnCerrar);
         //btnRegistro.setOnClickListener(e->permisos());
         conexion = new SQLiteConexion(this, Transacciones.nameDB, null, 1);
         permisos();
 
-
+        btnCerrar.setOnClickListener(e->cerrarSesion());
 
     }
+
+    private void cerrarSesion() {
+        try {
+            SQLiteConexion conexion = new SQLiteConexion(this, Transacciones.nameDB, null, 1);
+            SQLiteDatabase db = conexion.getWritableDatabase();
+            String nombreCliente = listClientes.get(0).getNombre();
+            //String nombreUsuario = obtenerNombreUsuarioActual();
+
+            String whereClause = Transacciones.nombre_cliente + "=?";
+            String[] whereArgs = {nombreCliente};
+
+            int result = db.delete(Transacciones.Tabla1, whereClause, whereArgs);
+
+            if (result > 0) {
+                Toast.makeText(this, "Cierre de sesión exitoso", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Error al cerrar sesión", Toast.LENGTH_SHORT).show();
+            }
+
+            db.close();
+
+            // Redirige a la pantalla de inicio de sesión u otra pantalla apropiada
+            Intent intent = new Intent(MainActivity.this, RegistrarCliente.class);
+            startActivity(intent);
+            finish();  // Cierra la actividad actual para evitar que el usuario retroceda a la pantalla de sesión cerrada
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al acceder a la base de datos local", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String obtenerNombreUsuarioActual() {
+        SQLiteDatabase db = conexion.getReadableDatabase();
+        Cliente cliente = null;
+        String nombreUsuario=null;
+
+        Cursor cursor = db.rawQuery(Transacciones.SelectTableClientes, null);
+        while (cursor.moveToNext()) {
+            cliente = new Cliente();
+            nombreUsuario=cliente.getNombre();
+
+        }
+
+        cursor.close();
+        return nombreUsuario;
+
+    }
+
+
     private void getCliente() {
         SQLiteDatabase db = conexion.getReadableDatabase();
         Cliente cliente = null;
@@ -67,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             registrarCliente();
         }  else {
             // Mostrar el nombre del cliente en el Toast
-            String nombreCliente = listClientes.get(0).getNombre(); // Suponiendo que solo quieres mostrar el primer cliente
+            String nombreCliente = listClientes.get(0).getNombre();
             String mensaje = getString(R.string.RespuestaTemp) + " " + nombreCliente;
             Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
         }

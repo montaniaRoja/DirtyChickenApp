@@ -67,26 +67,7 @@ public class SQLiteConexion extends SQLiteOpenHelper
         return cliente;
     }
 
-    public boolean actualizarContacto(int id, String nombre, String telefono, String latitud, String longitud) {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(Transacciones.nombre_cliente, nombre);
-        values.put(Transacciones.tel_cliente, telefono);
-        values.put(Transacciones.lat_cliente, latitud);
-        values.put(Transacciones.long_cliente, longitud);
-
-        String whereClause = Transacciones.id_cliente + "=?";
-        String[] whereArgs = {String.valueOf(id)};
-
-        // Realiza la actualización y devuelve el número de filas afectadas
-        int filasAfectadas = db.update(Transacciones.Tabla1, values, whereClause, whereArgs);
-
-        db.close();
-
-
-        return filasAfectadas > 0;
-    }
 
 
 }

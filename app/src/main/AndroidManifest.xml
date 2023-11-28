@@ -37,6 +37,14 @@
         <activity
             android:name=".pantallas.RegistrarCliente"
             android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBX263DhHPiPSwjqNHgOSgDVRLWaKIkVQ8" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
         <activity
             android:name=".pantallas.MainActivity"
             android:exported="true">

@@ -15,7 +15,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="#F44336"
-        android:text="Salir"
+        android:text="Cerrar Sesion"
         android:textColor="#CDDC39"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,4 +48,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:shadowColor="#191717"
+        android:text="Dirty"
+        android:textAllCaps="true"
+        android:textColor="#D61414"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

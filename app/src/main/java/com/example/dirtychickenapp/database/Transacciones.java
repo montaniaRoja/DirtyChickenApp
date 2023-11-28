@@ -18,11 +18,9 @@ public class Transacciones
     public static final String lat_cliente = "lat_cliente";
     public static final String long_cliente = "long_cliente";
     public static final String correo_cliente = "correo_cliente";
-    public static final String DeleteContact = "DELETE FROM " + Transacciones.Tabla1 + " WHERE " + Transacciones.id_cliente + " = ?";
+    public static final String DeleteContact = "DELETE FROM " + Transacciones.Tabla1 + " WHERE " + Transacciones.nombre_cliente + " = ?";
 
 
-    // Consultas de Base de datos
-    //ddl
 
 
     public static final String CreateTableClientes = "CREATE TABLE clientes " +
