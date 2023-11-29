@@ -43,9 +43,14 @@ public class MainActivity extends AppCompatActivity {
         //btnRegistro.setOnClickListener(e->permisos());
         conexion = new SQLiteConexion(this, Transacciones.nameDB, null, 1);
         permisos();
-
+        btnOrdenar.setOnClickListener(e->ordenarProductos());
         btnCerrar.setOnClickListener(e->cerrarSesion());
 
+    }
+
+    private void ordenarProductos() {
+        Intent intent = new Intent(MainActivity.this, ListaProductos.class);
+        startActivity(intent);
     }
 
     private void cerrarSesion() {
