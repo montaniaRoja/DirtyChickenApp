@@ -14,44 +14,52 @@
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="452dp"
             android:orientation="horizontal"
             android:padding="6dp">
+
             <ImageView
                 android:id="@+id/imgView"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="203dp"
+                android:layout_height="195dp"
                 android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
+                android:layout_marginStart="94dp"
+                android:layout_marginLeft="88dp"
+                android:layout_marginEnd="89dp"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
-                app:srcCompat="@drawable/pollo"
-                android:layout_alignParentLeft="true"/>
+                app:srcCompat="@drawable/pollo" />
 
             <TextView
                 android:id="@+id/txtPrecio"
-                android:layout_width="103dp"
-                android:layout_height="32dp"
+                android:layout_width="328dp"
+                android:layout_height="52dp"
+                android:layout_below="@+id/txtProducto"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="2dp"
-                android:layout_toEndOf="@+id/imgView"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="37dp"
                 android:text="Precio"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
+
             <TextView
                 android:id="@+id/txtProducto"
-                android:layout_width="103dp"
-                android:layout_height="32dp"
+                android:layout_width="348dp"
+                android:layout_height="133dp"
+                android:layout_below="@+id/imgView"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_toEndOf="@+id/imgView"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="41dp"
+                android:layout_marginEnd="27dp"
                 android:text="Nombre"
                 android:textColor="@color/black"
                 android:textSize="24dp" />

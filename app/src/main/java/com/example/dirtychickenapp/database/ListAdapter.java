@@ -1,6 +1,7 @@
 package com.example.dirtychickenapp.database;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,16 +62,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         }
 
         void bindData(final Producto item) {
+            Log.d("ListAdapter", "bindData llamado para: " + item.getNombre_producto());  // Agrega este log
+
             txtProducto.setText(item.getNombre_producto());
             txtPrecio.setText(String.valueOf(item.getPrecio()));
-            /*
+
             // Usar Glide para cargar imágenes
             Glide.with(itemView.getContext())
-                    .load(item.getRuta_imagen()) // Asegúrate de que la ruta de la imagen sea válida
-                    .placeholder(R.drawable.placeholder_image) // Imagen de marcador de posición
-                    .into(imgView);
+                    .load(item.getRuta_imagen()).into(imgView);
 
-             */
+            Log.d("ListAdapter", "Producto: " + item.getNombre_producto() + ", Precio: " + item.getPrecio() + ", Ruta: " + item.getRuta_imagen());
+
+
         }
     }
 }
