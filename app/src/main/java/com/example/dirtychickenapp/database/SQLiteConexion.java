@@ -23,7 +23,7 @@ public class SQLiteConexion extends SQLiteOpenHelper
     {
         // Crear los objectos de base de datos
         sqLiteDatabase.execSQL(Transacciones.CreateTableClientes);
-
+        sqLiteDatabase.execSQL(Transacciones.CreateTablePedidos);
 
     }
 
@@ -31,7 +31,7 @@ public class SQLiteConexion extends SQLiteOpenHelper
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
     {
         sqLiteDatabase.execSQL(Transacciones.DropTableClientes);
-
+        sqLiteDatabase.execSQL(Transacciones.DropTablePedidos);
         onCreate(sqLiteDatabase);
 
     }

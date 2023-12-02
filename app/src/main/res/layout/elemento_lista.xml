@@ -25,15 +25,15 @@
 
             <ImageView
                 android:id="@+id/imgView"
-                android:layout_width="500dp"
+                android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginLeft="88dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="0dp"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
                 app:srcCompat="@drawable/pollo" />
@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/txtPrecio"
                 android:layout_width="328dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_below="@+id/txtProducto"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
@@ -57,7 +57,7 @@
             <TextView
                 android:id="@+id/txtProducto"
                 android:layout_width="335dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_below="@+id/imgView"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
@@ -68,6 +68,22 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
+
+            <Button
+                android:id="@+id/containedButton"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtPrecio"
+                android:backgroundTint="#F44336"
+                android:textColor="#CDDC39"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Agregar al pedido"
+                app:icon="@drawable/carretilla" />
 
 
         </RelativeLayout>
