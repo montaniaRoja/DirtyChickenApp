@@ -2,6 +2,7 @@ package com.example.dirtychickenapp.pantallas;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListaProductos extends AppCompatActivity {
-
+    Button btnAgregar;
     List<Producto> productoList;
     RecyclerView recyclerView;
     private final String urlProductos = "https://adolfocarranzauth.pw/pmovilfinal/proyectofinalmovil01/listProductos.php";
