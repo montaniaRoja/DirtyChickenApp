@@ -1,8 +1,10 @@
 package com.example.dirtychickenapp.pantallas;
-
+import com.example.dirtychickenapp.pantallas.OnItemClickListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.dirtychickenapp.R;
 import com.example.dirtychickenapp.objetos.Producto;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,10 +28,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaProductos extends AppCompatActivity {
+public class ListaProductos extends AppCompatActivity implements OnItemClickListener {
     Button btnAgregar;
+    private int contadorClicks = 1;
     List<Producto> productoList;
     RecyclerView recyclerView;
+    EditText txtQty;
     private final String urlProductos = "https://adolfocarranzauth.pw/pmovilfinal/proyectofinalmovil01/listProductos.php";
 
     @Override
@@ -39,7 +44,13 @@ public class ListaProductos extends AppCompatActivity {
         recyclerView = findViewById(R.id.listRV);  // Use the class-level variable here
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        txtQty=findViewById(R.id.txtQty);
+        txtQty.setText(String.valueOf(0));
+       // txtQty.setEnabled(false);
+       txtQty.setKeyListener(null);
+       txtQty.setFocusable(false);
+        txtQty.setClickable(false);
+        txtQty.setLongClickable(false);
         productoList = new ArrayList<>();
 
         cargarProductos();
@@ -67,7 +78,7 @@ public class ListaProductos extends AppCompatActivity {
                                 ));
                             }
 
-                            Adapter adapter = new Adapter(productoList, ListaProductos.this);
+                            Adapter adapter = new Adapter(productoList, ListaProductos.this,ListaProductos.this);
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -85,5 +96,14 @@ public class ListaProductos extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(ListaProductos.this);
         requestQueue.add(stringRequest);
     }
+
+    @Override
+    public void onItemClick(int position, int clickCount) {
+        contadorClicks = clickCount;
+        txtQty.setText(String.valueOf(contadorClicks));
+        Log.d("conteo de articulos"," cantidad clicks  "+contadorClicks);
+
+    }
+
 
 }

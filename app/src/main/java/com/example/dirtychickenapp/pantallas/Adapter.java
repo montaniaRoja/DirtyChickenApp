@@ -15,19 +15,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.annotation.GlideModule;
 import com.example.dirtychickenapp.R;
+import com.example.dirtychickenapp.objetos.DetallePedido;
 import com.example.dirtychickenapp.objetos.Producto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private List<Producto> mData;
+    private List<DetallePedido> detallesPedido = new ArrayList<>(); // Lista para almacenar detalles del pedido
     private LayoutInflater mInflater;
     private Context context;
-
-    public Adapter(List<Producto> itemList, Context context) {
+    private OnItemClickListener mListener;
+    public int productCount=0;
+    public Adapter(List<Producto> itemList, Context context, OnItemClickListener listener) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = itemList;
+
+        this.mListener = listener;
     }
 
     @NonNull
@@ -51,15 +57,39 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int adapterPosition = holder.getAdapterPosition();
+                productCount+=1;
+                int adapterPosition = holder.getAbsoluteAdapterPosition();//getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     Log.d("Adapter", "Botón clickeado en posición: " + adapterPosition);
-
+                    mListener.onItemClick(adapterPosition, productCount);
                     Producto producto = mData.get(adapterPosition);
+                    Log.d("detalle pedido size","detalle pedido size "+String.valueOf(productCount));
+                    int posicion=adapterPosition;
                     String nombreProducto = producto.getNombre_producto();
+                    Double precioProducto= producto.getPrecio();
+                    int cantidad=1;
+                    DetallePedido detalleExistente = null;
+                    for (DetallePedido detalle : detallesPedido) {
+                        if (detalle.getPosicion() == posicion) {
+                            detalleExistente = detalle;
+                            break;
+                        }
+                    }
+
+                    // Si ya existe, incrementar la cantidad, de lo contrario, agregar un nuevo DetallePedido
+                    if (detalleExistente != null) {
+                        detalleExistente.setCantidad(detalleExistente.getCantidad() + 1);
+                    } else {
+                        DetallePedido detallePedido = new DetallePedido(posicion, nombreProducto, precioProducto, cantidad);
+                        detallesPedido.add(detallePedido);
+                    }
+
                     Log.d("Adapter", "Nombre del producto: " + nombreProducto);
 
-                    // Puedes realizar acciones adicionales aquí con el producto en esta posición
+
+                    for (DetallePedido detalle : detallesPedido) {
+                        Log.d("Adapter", "Detalle del pedido: " + detalle.getNombreProducto() + ", Precio "+detalle.getPrecioProducto()+ ", Cantidad: " + detalle.getCantidad());
+                    }
                 }
             }
         });
@@ -86,6 +116,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             txtPrecio = itemView.findViewById(R.id.txtPrecio);
             txtProducto = itemView.findViewById(R.id.txtProducto);
             btnAgregar = itemView.findViewById(R.id.btnAgregar);
+
+
         }
     }
 }
