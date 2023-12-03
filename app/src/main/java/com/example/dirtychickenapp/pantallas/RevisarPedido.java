@@ -1,34 +1,41 @@
 // RevisarPedido.java
 package com.example.dirtychickenapp.pantallas;
 
+
+import android.content.Intent;
+import android.widget.Button;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dirtychickenapp.R;
 import com.example.dirtychickenapp.objetos.DetallePedido;
+import com.example.dirtychickenapp.objetos.TotalPedido;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 public class RevisarPedido extends AppCompatActivity {
     ListView orderList;
-
+    EditText txtTotal;
+    Button btnCancelar, btnConfirmar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revisar_pedido);
         orderList = findViewById(R.id.orderList);
+        txtTotal=findViewById(R.id.txtTotal);
+        btnCancelar=findViewById(R.id.btnCancelar);
+        btnConfirmar=findViewById(R.id.btnConfirmar);
 
-        // Obtén el array de DetallePedido desde el Intent
         DetallePedido[] pedidoArray = (DetallePedido[]) Objects.requireNonNull(getIntent().getSerializableExtra("pedidoArray"));
+        txtTotal.setText(TotalPedido.getTotal());
 
-        // Verifica si el array no es nulo antes de imprimirlo
-        // RevisarPedido.java
-// ...
+        btnCancelar.setOnClickListener(e->cancelar());
 
         if (pedidoArray != null) {
             Log.d("array", "Detalle del pedido en revisar pedido: ");
@@ -44,4 +51,20 @@ public class RevisarPedido extends AppCompatActivity {
         }
 
     }
+
+    private void cancelar() {
+
+        DetallePedido[] pedidoArray = new DetallePedido[0];
+
+        Adapter.clearDetallesPedido();
+
+        Intent intent = new Intent(RevisarPedido.this, MainActivity.class);
+
+        intent.putExtra("pedidoArray", pedidoArray);
+
+        startActivity(intent);
+
+        finish();
+    }
+
 }

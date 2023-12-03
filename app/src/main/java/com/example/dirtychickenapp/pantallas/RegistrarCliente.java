@@ -81,10 +81,9 @@ public class RegistrarCliente extends AppCompatActivity {
 
         Intent intent=new Intent(RegistrarCliente.this, MainActivity.class);
         startActivity(intent);
+        finish();
 
     }
-
-
 
     private void guardarClienteLocal() {
         String nombre = txtNombre.getText().toString();

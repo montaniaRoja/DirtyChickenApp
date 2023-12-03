@@ -5,4 +5,5 @@
     <string name="Respuesta">datos de cliente creados</string>
     <string name="RespuestaTemp">Bienvenido de Nuevo !!</string>
     <string name="label">Qty</string>
+    <string name="etiqueta">Monto Total</string>
 </resources>

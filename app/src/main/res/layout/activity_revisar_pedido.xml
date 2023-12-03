@@ -66,4 +66,26 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textPedido" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtMontoTotal"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/etiqueta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orderList">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@ import com.bumptech.glide.annotation.GlideModule;
 import com.example.dirtychickenapp.R;
 import com.example.dirtychickenapp.objetos.DetallePedido;
 import com.example.dirtychickenapp.objetos.Producto;
+import com.example.dirtychickenapp.objetos.TotalPedido;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +28,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private LayoutInflater mInflater;
     private Context context;
     private OnItemClickListener mListener;
+    private double acumulado=0;
     public int productCount=0;
-    public Adapter(List<Producto> itemList, Context context, OnItemClickListener listener) {
+    private TotalPedido totalPedido;
+    public Adapter(List<Producto> itemList, Context context, OnItemClickListener listener, TotalPedido totalPedido) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = itemList;
-
         this.mListener = listener;
+        this.totalPedido = totalPedido;
     }
 
     @NonNull
@@ -57,18 +60,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                productCount+=1;
-                int adapterPosition = holder.getAbsoluteAdapterPosition();//getAdapterPosition();
+                productCount += 1;
+                int adapterPosition = holder.getAbsoluteAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     Log.d("Adapter", "Botón clickeado en posición: " + adapterPosition);
                     mListener.onItemClick(adapterPosition, productCount);
                     Producto producto = mData.get(adapterPosition);
-                    Log.d("detalle pedido size","detalle pedido size "+String.valueOf(productCount));
-                    int posicion=adapterPosition;
+                    Log.d("detalle pedido size", "detalle pedido size " + String.valueOf(productCount));
+                    int posicion = adapterPosition;
                     String nombreProducto = producto.getNombre_producto();
-                    Double precioProducto= producto.getPrecio();
-                    int cantidad=1;
+                    Double precioProducto = producto.getPrecio();
+                    int cantidad = 1;
                     DetallePedido detalleExistente = null;
+
                     for (DetallePedido detalle : detallesPedido) {
                         if (detalle.getPosicion() == posicion) {
                             detalleExistente = detalle;
@@ -76,7 +80,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                         }
                     }
 
-                    // Si ya existe, incrementar la cantidad, de lo contrario, agregar un nuevo DetallePedido
                     if (detalleExistente != null) {
                         detalleExistente.setCantidad(detalleExistente.getCantidad() + 1);
                     } else {
@@ -87,12 +90,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                     Log.d("Adapter", "Nombre del producto: " + nombreProducto);
 
 
+                    acumulado = 0;
                     for (DetallePedido detalle : detallesPedido) {
-                        Log.d("Adapter", "Detalle del pedido: " + detalle.getNombreProducto() + ", Precio "+detalle.getPrecioProducto()+ ", Cantidad: " + detalle.getCantidad());
+                        acumulado = acumulado + (detalle.getCantidad() * detalle.getPrecioProducto());
+                        Log.d("Adapter", "Detalle del pedido: " + detalle.getNombreProducto() + ", Precio " + detalle.getPrecioProducto() + ", Cantidad: " + detalle.getCantidad());
                     }
+
+                    totalPedido.setTotal(String.valueOf(acumulado));
+
                 }
             }
         });
+
     }
 
     @Override
@@ -122,5 +131,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
     public static List<DetallePedido> getDetallesPedido() {
         return detallesPedido;
+    }
+    public static void clearDetallesPedido() {
+        detallesPedido.clear();
     }
 }

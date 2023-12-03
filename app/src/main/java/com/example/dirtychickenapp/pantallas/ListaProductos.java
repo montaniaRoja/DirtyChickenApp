@@ -1,5 +1,6 @@
 package com.example.dirtychickenapp.pantallas;
 import com.example.dirtychickenapp.objetos.DetallePedido;
+import com.example.dirtychickenapp.objetos.TotalPedido;
 import com.example.dirtychickenapp.pantallas.OnItemClickListener;
 
 import android.content.Intent;
@@ -58,6 +59,7 @@ public class ListaProductos extends AppCompatActivity implements OnItemClickList
         txtQty.setLongClickable(false);
         productoList = new ArrayList<>();
         btnProcesar=findViewById(R.id.btnProcesar);
+
         btnProcesar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,8 +102,8 @@ public class ListaProductos extends AppCompatActivity implements OnItemClickList
                                         ruta
                                 ));
                             }
-
-                            Adapter adapter = new Adapter(productoList, ListaProductos.this,ListaProductos.this);
+                            TotalPedido totalPedido = new TotalPedido();
+                            Adapter adapter = new Adapter(productoList, ListaProductos.this,ListaProductos.this, totalPedido );
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
