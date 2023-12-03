@@ -1,9 +1,14 @@
 package com.example.dirtychickenapp.pantallas;
+import com.example.dirtychickenapp.objetos.DetallePedido;
 import com.example.dirtychickenapp.pantallas.OnItemClickListener;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListaProductos extends AppCompatActivity implements OnItemClickListener {
-    Button btnAgregar;
-    private int contadorClicks = 1;
+    ImageButton btnProcesar;
+    private int contadorClicks = 0;
     List<Producto> productoList;
     RecyclerView recyclerView;
     EditText txtQty;
@@ -52,9 +57,27 @@ public class ListaProductos extends AppCompatActivity implements OnItemClickList
         txtQty.setClickable(false);
         txtQty.setLongClickable(false);
         productoList = new ArrayList<>();
+        btnProcesar=findViewById(R.id.btnProcesar);
+        btnProcesar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                List<DetallePedido> detallesPedido = Adapter.getDetallesPedido();
+
+                Intent intent = new Intent(ListaProductos.this, RevisarPedido.class);
+                intent.putExtra("pedidoArray", detallesPedido.toArray(new DetallePedido[detallesPedido.size()]));
+                startActivity(intent);
+            }
+        });
+
+
+
+        btnProcesar.setEnabled(false);
 
         cargarProductos();
     }
+
+
 
     private void cargarProductos() {
         // Reemplaza ".." con la ruta correcta
@@ -102,6 +125,9 @@ public class ListaProductos extends AppCompatActivity implements OnItemClickList
         contadorClicks = clickCount;
         txtQty.setText(String.valueOf(contadorClicks));
         Log.d("conteo de articulos"," cantidad clicks  "+contadorClicks);
+        if(contadorClicks>0){
+            btnProcesar.setEnabled(true);
+        }
 
     }
 

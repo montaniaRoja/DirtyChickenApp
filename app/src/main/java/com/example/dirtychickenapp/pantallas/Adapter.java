@@ -23,7 +23,7 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private List<Producto> mData;
-    private List<DetallePedido> detallesPedido = new ArrayList<>(); // Lista para almacenar detalles del pedido
+    private static List<DetallePedido> detallesPedido = new ArrayList<>(); // Lista para almacenar detalles del pedido
     private LayoutInflater mInflater;
     private Context context;
     private OnItemClickListener mListener;
@@ -119,5 +119,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
 
         }
+    }
+    public static List<DetallePedido> getDetallesPedido() {
+        return detallesPedido;
     }
 }

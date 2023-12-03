@@ -1,6 +1,8 @@
 package com.example.dirtychickenapp.objetos;
 
-public class DetallePedido {
+import java.io.Serializable;
+
+public class DetallePedido implements Serializable {
     private int posicion;
     private String nombreProducto;
     private Double precioProducto;
@@ -44,4 +46,15 @@ public class DetallePedido {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    @Override
+    public String toString() {
+        return "DetallePedido{" +
+                "posicion=" + posicion +
+                ", nombreProducto='" + nombreProducto + '\'' +
+                ", precioProducto=" + precioProducto +
+                ", cantidad=" + cantidad +
+                '}';
+    }
+
 }
