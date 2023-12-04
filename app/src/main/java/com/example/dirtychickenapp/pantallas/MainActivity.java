@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import com.example.dirtychickenapp.database.SQLiteConexion;
 import com.example.dirtychickenapp.database.Transacciones;
-
+import android.util.Log;
 
 
 import android.os.Bundle;
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnCerrar;
     SQLiteConexion conexion;
     ArrayList<Cliente> listClientes;
+    public static String clienteMail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             String nombreCliente = listClientes.get(0).getNombre();
             //String nombreUsuario = obtenerNombreUsuarioActual();
 
-            String whereClause = Transacciones.nombre_cliente + "=?";
+            String whereClause = Transacciones.nombre + "=?";
             String[] whereArgs = {nombreCliente};
 
             int result = db.delete(Transacciones.Tabla1, whereClause, whereArgs);
@@ -73,25 +74,27 @@ public class MainActivity extends AppCompatActivity {
 
             db.close();
 
-            // Redirige a la pantalla de inicio de sesión u otra pantalla apropiada
+
             Intent intent = new Intent(MainActivity.this, RegistrarCliente.class);
             startActivity(intent);
-            finish();  // Cierra la actividad actual para evitar que el usuario retroceda a la pantalla de sesión cerrada
+            finish();
         } catch (SQLiteException e) {
             e.printStackTrace();
             Toast.makeText(this, "Error al acceder a la base de datos local", Toast.LENGTH_SHORT).show();
         }
     }
-
+    /*
     private String obtenerNombreUsuarioActual() {
         SQLiteDatabase db = conexion.getReadableDatabase();
         Cliente cliente = null;
         String nombreUsuario=null;
+        String correoUsuario=null;
 
         Cursor cursor = db.rawQuery(Transacciones.SelectTableClientes, null);
         while (cursor.moveToNext()) {
             cliente = new Cliente();
             nombreUsuario=cliente.getNombre();
+            correoUsuario=cliente.getCorreo();
 
         }
 
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         return nombreUsuario;
 
     }
-
+    */
 
     private void getCliente() {
         SQLiteDatabase db = conexion.getReadableDatabase();
@@ -112,10 +115,11 @@ public class MainActivity extends AppCompatActivity {
 
             cliente.setId(cursor.getInt(0));
             cliente.setNombre(cursor.getString(1));
+            cliente.setTelefono(cursor.getString(2));
             cliente.setDireccion(cursor.getString(3));
-            cliente.setLatitud(cursor.getDouble(4));
-            cliente.setLongitud(cursor.getDouble(5));
-            cliente.setCorreo(cursor.getString(2));
+            cliente.setCorreo(cursor.getString(4));
+            cliente.setLatitud(cursor.getDouble(5));
+            cliente.setLongitud(cursor.getDouble(6));
 
             listClientes.add(cliente);
         }
@@ -126,7 +130,10 @@ public class MainActivity extends AppCompatActivity {
         }  else {
             // Mostrar el nombre del cliente en el Toast
             String nombreCliente = listClientes.get(0).getNombre();
+            String correoCliente=listClientes.get(0).getCorreo();
+            clienteMail=correoCliente;
             String mensaje = getString(R.string.RespuestaTemp) + " " + nombreCliente;
+
             Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
         }
 

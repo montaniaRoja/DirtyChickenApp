@@ -11,15 +11,15 @@ public class Transacciones
     public static final String Tabla2="pedidos";
 
     // Campos de la tabla clientes
-    public static final String id_cliente = "id_cliente";
+    public static final String id = "id";
 
-    public static final String nombre_cliente = "nombre_cliente";
-    public static final String tel_cliente = "tel_cliente";
-    public static final String dir_cliente = "dir_cliente";
-    public static final String lat_cliente = "lat_cliente";
-    public static final String long_cliente = "long_cliente";
-    public static final String correo_cliente = "correo_cliente";
-    public static final String DeleteContact = "DELETE FROM " + Transacciones.Tabla1 + " WHERE " + Transacciones.nombre_cliente + " = ?";
+    public static final String nombre = "nombre";
+    public static final String telefono = "telefono";
+    public static final String direccion = "direccion";
+    public static final String latitud = "latitud";
+    public static final String longitud = "longitud";
+    public static final String correo = "correo";
+    public static final String DeleteContact = "DELETE FROM " + Transacciones.Tabla1 + " WHERE " + Transacciones.nombre + " = ?";
 
     // campos de la tabla pedidos
     public static final String id_pedido = "id_pedido";
@@ -32,7 +32,7 @@ public class Transacciones
 
 
     public static final String CreateTableClientes = "CREATE TABLE clientes " +
-            "( id INTEGER PRIMARY KEY AUTOINCREMENT,nombre_cliente varchar(100),tel_cliente varchar(100),dir_cliente varchar(200),lat_cliente varchar(100), long_cliente varchar(100), correo_cliente varchar(100))";
+            "( id INTEGER PRIMARY KEY AUTOINCREMENT,nombre varchar(100),telefono varchar(100),direccion varchar(200), correo varchar(100),latitud varchar(100), longitud varchar(100))";
 
 
     public static final String DropTableClientes  = "DROP TABLE IF EXISTS clientes";

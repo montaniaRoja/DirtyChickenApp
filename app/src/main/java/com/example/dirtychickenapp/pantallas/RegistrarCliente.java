@@ -100,14 +100,15 @@ public class RegistrarCliente extends AppCompatActivity {
             SQLiteDatabase db = conexion.getWritableDatabase();
 
             ContentValues valores = new ContentValues();
-            valores.put(Transacciones.nombre_cliente, nombre);
-            valores.put(Transacciones.tel_cliente, telefono);
-            valores.put(Transacciones.dir_cliente, direccion);
-            valores.put(Transacciones.lat_cliente, latitud);
-            valores.put(Transacciones.long_cliente, longitud);
-            valores.put(Transacciones.correo_cliente, correo);
+            valores.put(Transacciones.nombre, nombre);
+            valores.put(Transacciones.telefono, telefono);
+            valores.put(Transacciones.direccion, direccion);
+            valores.put(Transacciones.correo, correo);
+            valores.put(Transacciones.latitud, latitud);
+            valores.put(Transacciones.longitud, longitud);
 
-            Long Result = db.insert(Transacciones.Tabla1, Transacciones.id_cliente, valores);
+
+            Long Result = db.insert(Transacciones.Tabla1, Transacciones.id, valores);
 
             Toast.makeText(this, getString(R.string.Respuesta), Toast.LENGTH_SHORT).show();
             db.close();

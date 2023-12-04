@@ -35,7 +35,7 @@ public class SQLiteConexion extends SQLiteOpenHelper
         onCreate(sqLiteDatabase);
 
     }
-
+    /*
     @SuppressLint("Range")
     public Cliente getContactoById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -66,7 +66,7 @@ public class SQLiteConexion extends SQLiteOpenHelper
 
         return cliente;
     }
-
+    */
 
 
 
