@@ -16,6 +16,7 @@ import com.example.dirtychickenapp.R;
 import com.example.dirtychickenapp.objetos.DetallePedido;
 import com.example.dirtychickenapp.objetos.TotalPedido;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +28,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class RevisarPedido extends AppCompatActivity {
@@ -47,18 +49,17 @@ public class RevisarPedido extends AppCompatActivity {
         DetallePedido[] pedidoArray = (DetallePedido[]) Objects.requireNonNull(getIntent().getSerializableExtra("pedidoArray"));
         txtTotal.setText(TotalPedido.getTotal());
 
-        btnConfirmar.setOnClickListener(e->enviarPedido());
+        btnConfirmar.setOnClickListener(e-> {
+            try {
+                enviarPedido();
+            } catch (JSONException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         btnCancelar.setOnClickListener(e->cancelar());
 
 
-
-
-
         if (pedidoArray != null) {
-
-            //datos a enviar al servidor
-            totalPedido=Double.parseDouble(TotalPedido.getTotal());
-            correo=MainActivity.clienteMail;
 
             Log.d("correo del cliente"," datos a enviar al servidor "+MainActivity.clienteMail + " total pedido "+totalPedido);
             Log.d("array", "Detalle del pedido en revisar pedido: ");
@@ -93,10 +94,62 @@ public class RevisarPedido extends AppCompatActivity {
         finish();
     }
 
-    private void enviarPedido() {
+    private void enviarPedido() throws JSONException {
         enviarencabezado();
+        enviarDetalle();
 
     }
+
+    private void enviarDetalle() {
+        List<DetallePedido> detallesPedido = Adapter.getDetallesPedido(); // Obtén la lista de detalles
+
+        for (DetallePedido detalle : detallesPedido) {
+            // Crea un nuevo objeto jsonDetalle en cada iteración
+            JSONObject jsonDetalle = new JSONObject();
+
+            try {
+                jsonDetalle.put("producto", detalle.getNombreProducto());
+                jsonDetalle.put("cantidad", detalle.getCantidad());
+                jsonDetalle.put("precio", detalle.getPrecioProducto());
+                jsonDetalle.put("correo", MainActivity.clienteMail);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            // Mueve el Thread fuera del bucle para enviar cada detalle
+            new Thread(() -> enviarDetalleAlServidor(jsonDetalle)).start();
+        }
+    }
+
+    private void enviarDetalleAlServidor(JSONObject jsonDetalle) {
+        try {
+            URL url = new URL("https://adolfocarranzauth.pw/pmovilfinal/proyectofinalmovil01/CrearDetalle.php");
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setDoOutput(true);
+
+            OutputStream outputStream = urlConnection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+            writer.write(jsonDetalle.toString());
+            writer.flush();
+            writer.close();
+            outputStream.close();
+
+            // Obtener la respuesta del servidor
+            int responseCode = urlConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+            } else {
+                Log.d("error", "no se envió el json detalle");
+            }
+
+            urlConnection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void enviarencabezado() {
         Log.d("","enviando encabezado");
