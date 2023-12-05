@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
 import com.example.dirtychickenapp.R;
 import com.example.dirtychickenapp.objetos.DetallePedido;
 import com.example.dirtychickenapp.objetos.Producto;

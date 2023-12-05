@@ -82,7 +82,7 @@ public class ListaProductos extends AppCompatActivity implements OnItemClickList
 
 
     private void cargarProductos() {
-        // Reemplaza ".." con la ruta correcta
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, urlProductos,
                 new Response.Listener<String>() {
                     @Override

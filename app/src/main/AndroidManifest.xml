@@ -38,6 +38,9 @@
         android:theme="@style/Theme.DirtyChickenApp"
         tools:targetApi="31">
         <activity
+            android:name=".pantallas.HistorialActivity"
+            android:exported="false" />
+        <activity
             android:name=".pantallas.RevisarPedido"
             android:exported="false" />
         <activity

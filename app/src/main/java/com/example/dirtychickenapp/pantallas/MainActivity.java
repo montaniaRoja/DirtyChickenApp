@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnOrdenar;
     Button btnCerrar;
+    
+    Button btnHistorial;
     SQLiteConexion conexion;
     ArrayList<Cliente> listClientes;
     public static String clienteMail;
@@ -43,13 +45,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnOrdenar=(Button)findViewById(R.id.btnOrdenar);
         btnCerrar=(Button)findViewById(R.id.btnCerrar);
+        btnHistorial=(Button)findViewById(R.id.btnHistorial);
         //btnRegistro.setOnClickListener(e->permisos());
         conexion = new SQLiteConexion(this, Transacciones.nameDB, null, 1);
         permisos();
         ejecutarActualizarPedido();
         btnOrdenar.setOnClickListener(e->ordenarProductos());
         btnCerrar.setOnClickListener(e->cerrarSesion());
+        
+        btnHistorial.setOnClickListener(e->verHistorial());
 
+    }
+
+    private void verHistorial() {
+        Intent intent = new Intent(MainActivity.this, HistorialActivity.class);
+        startActivity(intent);
     }
 
     private void ordenarProductos() {
