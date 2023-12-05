@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.widget.Button;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,7 +17,7 @@ import com.example.dirtychickenapp.R;
 import com.example.dirtychickenapp.objetos.DetallePedido;
 import com.example.dirtychickenapp.objetos.TotalPedido;
 
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,6 +39,8 @@ public class RevisarPedido extends AppCompatActivity {
     double totalPedido=0;
     String estado="recibido";
     String correo;
+
+    int numeroNeg=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,9 +100,11 @@ public class RevisarPedido extends AppCompatActivity {
 
     private void enviarPedido() throws JSONException {
         enviarDetalle();
+
         enviarencabezado();
+
         Toast.makeText(this, "Su pedido ha sido enviado", Toast.LENGTH_SHORT).show();
-        ejecutarActualizarPedido();
+       // ejecutarActualizarPedido();
         cancelar();
 
     }
@@ -113,6 +117,7 @@ public class RevisarPedido extends AppCompatActivity {
             JSONObject jsonDetalle = new JSONObject();
 
             try {
+                jsonDetalle.put("id_pedido", numeroNeg);
                 jsonDetalle.put("producto", detalle.getNombreProducto());
                 jsonDetalle.put("cantidad", detalle.getCantidad());
                 jsonDetalle.put("precio", detalle.getPrecioProducto());
@@ -145,7 +150,7 @@ public class RevisarPedido extends AppCompatActivity {
             int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
-                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
 
             } else {
                 Log.d("error", "no se envió el json detalle");
@@ -193,7 +198,7 @@ public class RevisarPedido extends AppCompatActivity {
                 int responseCode = urlConnection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
 
-                    InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
 
                 } else {
                         Log.d("error","no se envio el json");
@@ -205,7 +210,7 @@ public class RevisarPedido extends AppCompatActivity {
             }
         }).start();
     }
-
+    /*
     public void ejecutarActualizarPedido() {
         new Thread(() -> {
             try {
@@ -228,6 +233,6 @@ public class RevisarPedido extends AppCompatActivity {
             }
         }).start();
     }
-
+    */
 
 }

@@ -1,31 +1,33 @@
 package com.example.dirtychickenapp.pantallas;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import com.example.dirtychickenapp.database.SQLiteConexion;
 import com.example.dirtychickenapp.database.Transacciones;
-import android.util.Log;
+
 
 
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.dirtychickenapp.R;
-import com.example.dirtychickenapp.database.Transacciones;
+
 import com.example.dirtychickenapp.objetos.Cliente;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         //btnRegistro.setOnClickListener(e->permisos());
         conexion = new SQLiteConexion(this, Transacciones.nameDB, null, 1);
         permisos();
+        ejecutarActualizarPedido();
         btnOrdenar.setOnClickListener(e->ordenarProductos());
         btnCerrar.setOnClickListener(e->cerrarSesion());
 
@@ -175,6 +178,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void ejecutarActualizarPedido() {
+        new Thread(() -> {
+            try {
+                URL url = new URL("https://adolfocarranzauth.pw/pmovilfinal/proyectofinalmovil01/ActualizarPedido.php");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+
+                // Obtener la respuesta del servidor
+                int responseCode = urlConnection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // Éxito
+
+                } else {
+                    // Error
+                }
+
+                urlConnection.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
 
 
 }
