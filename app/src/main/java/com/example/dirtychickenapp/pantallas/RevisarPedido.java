@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +37,7 @@ public class RevisarPedido extends AppCompatActivity {
     EditText txtTotal;
     Button btnCancelar, btnConfirmar;
     double totalPedido=0;
+    String estado="recibido";
     String correo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +97,11 @@ public class RevisarPedido extends AppCompatActivity {
     }
 
     private void enviarPedido() throws JSONException {
-        enviarencabezado();
         enviarDetalle();
+        enviarencabezado();
+        Toast.makeText(this, "Su pedido ha sido enviado", Toast.LENGTH_SHORT).show();
+        ejecutarActualizarPedido();
+        cancelar();
 
     }
 
@@ -116,7 +121,7 @@ public class RevisarPedido extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            // Mueve el Thread fuera del bucle para enviar cada detalle
+
             new Thread(() -> enviarDetalleAlServidor(jsonDetalle)).start();
         }
     }
@@ -139,7 +144,9 @@ public class RevisarPedido extends AppCompatActivity {
             // Obtener la respuesta del servidor
             int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
+
                 InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
             } else {
                 Log.d("error", "no se envió el json detalle");
             }
@@ -161,6 +168,7 @@ public class RevisarPedido extends AppCompatActivity {
 
             jsonCliente.put("correo", correo);
             jsonCliente.put("total", totalPedido);
+            jsonCliente.put("estado",estado);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -197,5 +205,29 @@ public class RevisarPedido extends AppCompatActivity {
             }
         }).start();
     }
+
+    public void ejecutarActualizarPedido() {
+        new Thread(() -> {
+            try {
+                URL url = new URL("https://adolfocarranzauth.pw/pmovilfinal/proyectofinalmovil01/ActualizarPedido.php");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+
+                // Obtener la respuesta del servidor
+                int responseCode = urlConnection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // Éxito
+                    // Puedes procesar la respuesta si es necesario
+                } else {
+                    // Error
+                }
+
+                urlConnection.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
 
 }
