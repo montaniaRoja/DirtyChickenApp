@@ -210,29 +210,6 @@ public class RevisarPedido extends AppCompatActivity {
             }
         }).start();
     }
-    /*
-    public void ejecutarActualizarPedido() {
-        new Thread(() -> {
-            try {
-                URL url = new URL("https://adolfocarranzauth.pw/pmovilfinal/proyectofinalmovil01/ActualizarPedido.php");
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
 
-                // Obtener la respuesta del servidor
-                int responseCode = urlConnection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // Éxito
-                    // Puedes procesar la respuesta si es necesario
-                } else {
-                    // Error
-                }
-
-                urlConnection.disconnect();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-    */
 
 }

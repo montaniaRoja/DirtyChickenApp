@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
     tools:context=".pantallas.RevisarPedido">
 
     <TextView
@@ -39,8 +41,6 @@
         app:layout_constraintTop_toBottomOf="@+id/orderList" />
 
 
-
-
     <Button
         android:id="@+id/btnCancelar"
         style="@style/Widget.MaterialComponents.Button.Icon"
@@ -62,8 +62,11 @@
         android:layout_width="0dp"
         android:layout_height="423dp"
         android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textPedido" />
 
@@ -75,6 +78,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/etiqueta"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/orderList">
 
@@ -82,10 +86,13 @@
             android:id="@+id/txtTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="textEnd" />
+            android:background="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textColorHint="#000000" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,10 +45,11 @@ import android.os.Bundle;
 import com.example.dirtychickenapp.R;
 
 public class HistorialActivity extends AppCompatActivity {
-    private static final String URL_estados="poner aqui la url de la api";
+    private static String URL_estados;
 
     List<PedidosEstado>  pedidosEstadoList;
     RecyclerView historialView;
+    String correoCliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +59,22 @@ public class HistorialActivity extends AppCompatActivity {
         historialView.setHasFixedSize(true);
         historialView.setLayoutManager(new LinearLayoutManager(this));
         pedidosEstadoList=new ArrayList<>();
-        
-        cargarPedidos();
+        correoCliente=MainActivity.clienteMail;
+        Log.d("correo","correo para filtrar"+correoCliente);
+        try {
+            cargarPedidos();
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
 
-    private void cargarPedidos() {
+    private void cargarPedidos() throws UnsupportedEncodingException {
+        //String correoClienteEncoded = URLEncoder.encode(correoCliente, "UTF8");
+
+        URL_estados="https://adolfocarranzauth.pw/pmovilfinal/proyectofinalmovil01/listPedidos.php?correo="+correoCliente;
+        Log.d("URL", "URL solicitada: " + URL_estados);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_estados,
                 new Response.Listener<String>() {
                     @Override
@@ -70,19 +82,20 @@ public class HistorialActivity extends AppCompatActivity {
                         try {
                             JSONArray array = new JSONArray(response);
                             for (int i = 0; i < array.length(); i++) {
+
+
                                 JSONObject pedido = array.getJSONObject(i);
-                                String ruta = pedido.getString("ruta_almacenamiento");
-                                ruta = ruta.replace("..", "adolfocarranzauth.pw/pmovilfinal/proyectofinalmovil01");
-                                ruta = "https://" + ruta;  // Add the protocol to form a valid URL
-                                Log.d("Ruta recuperada",ruta);
+
+
                                 pedidosEstadoList.add(new PedidosEstado(
-                                        pedido.getInt("id_producto"),
-                                        pedido.getString("nombre_producto"),
-                                        pedido.getDouble("precio")
+                                        pedido.getInt("id_pedido"),
+                                        pedido.getString("correo"),
+                                        pedido.getDouble("total"),
+                                        pedido.getString("estado")
 
                                 ));
                             }
-                            TotalPedido totalPedido = new TotalPedido();
+
                             HistorialAdapter adapter = new HistorialAdapter(HistorialActivity.this, pedidosEstadoList);
                             historialView.setAdapter(adapter);
                         } catch (JSONException e) {

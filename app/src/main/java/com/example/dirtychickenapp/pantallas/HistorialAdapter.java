@@ -63,6 +63,17 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
             txtEstado=itemView.findViewById(R.id.txtEstado);
             txtMonto=itemView.findViewById(R.id.txtMonto);
             imageView5=itemView.findViewById(R.id.imageView5);
+            txtEstado.setEnabled(false);
+            txtEstado.setKeyListener(null);
+            txtEstado.setFocusable(false);
+            txtEstado.setClickable(false);
+            txtEstado.setLongClickable(false);
+
+            txtMonto.setEnabled(false);
+            txtMonto.setKeyListener(null);
+            txtMonto.setFocusable(false);
+            txtMonto.setClickable(false);
+            txtMonto.setLongClickable(false);
 
         }
     }
