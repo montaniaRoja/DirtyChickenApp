@@ -19,6 +19,7 @@ public class Transacciones
     public static final String latitud = "latitud";
     public static final String longitud = "longitud";
     public static final String correo = "correo";
+    public static final String token = "token";
     public static final String DeleteContact = "DELETE FROM " + Transacciones.Tabla1 + " WHERE " + Transacciones.nombre + " = ?";
 
     // campos de la tabla pedidos
@@ -32,7 +33,7 @@ public class Transacciones
 
 
     public static final String CreateTableClientes = "CREATE TABLE clientes " +
-            "( id INTEGER PRIMARY KEY AUTOINCREMENT,nombre varchar(100),telefono varchar(100),direccion varchar(200), correo varchar(100),latitud varchar(100), longitud varchar(100))";
+            "( id INTEGER PRIMARY KEY AUTOINCREMENT,nombre varchar(100),telefono varchar(100),direccion varchar(200), correo varchar(100),latitud varchar(100), longitud varchar(100),token varchar(200))";
 
 
     public static final String DropTableClientes  = "DROP TABLE IF EXISTS clientes";

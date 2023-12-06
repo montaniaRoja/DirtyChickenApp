@@ -9,6 +9,7 @@ public class Cliente {
     private String correo;
     private double latitud;
     private double longitud;
+    private String token;
 
     public Cliente(){
 
@@ -68,5 +69,13 @@ public class Cliente {
 
     public void setLongitud(double longitud) {
         this.longitud = longitud;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -1,5 +1,8 @@
 package com.example.dirtychickenapp.pantallas;
 
+import static com.example.dirtychickenapp.pantallas.MainActivity.LAST_TOKEN_KEY;
+import static com.example.dirtychickenapp.pantallas.MainActivity.PREFS_NAME;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -16,6 +19,7 @@ import android.database.sqlite.SQLiteException;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,13 +47,14 @@ public class RegistrarCliente extends AppCompatActivity {
     EditText txtNombre, txtDireccion, txtPhone, txtCorreo, txtLatitud, txtLongitud;
     Button btnGuardarCliente;
 
+    String lastToken;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_cliente);
-
+        getLocation();
         txtNombre=findViewById(R.id.txtNombre);
         txtDireccion=findViewById(R.id.txtDireccion);
         txtPhone=findViewById(R.id.txtPhone);
@@ -57,7 +62,8 @@ public class RegistrarCliente extends AppCompatActivity {
         txtLatitud=findViewById(R.id.txtLatitud);
         txtLongitud=findViewById(R.id.txtLongitud);
         btnGuardarCliente=(Button)findViewById(R.id.btnGuardarCliente);
-        getLocation();
+        lastToken = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString(LAST_TOKEN_KEY, "");
+
 
 
         btnGuardarCliente.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +98,9 @@ public class RegistrarCliente extends AppCompatActivity {
         String latitud = txtLatitud.getText().toString();
         String longitud = txtLongitud.getText().toString();
         String correo = txtCorreo.getText().toString();
-
+        String token=lastToken;
+        Log.d("correo","correo es " + correo);
+        Log.d("correo","el token  es " + token);
 
         try {
 
@@ -106,6 +114,7 @@ public class RegistrarCliente extends AppCompatActivity {
             valores.put(Transacciones.correo, correo);
             valores.put(Transacciones.latitud, latitud);
             valores.put(Transacciones.longitud, longitud);
+            valores.put(Transacciones.token,token);
 
 
             Long Result = db.insert(Transacciones.Tabla1, Transacciones.id, valores);
@@ -132,6 +141,7 @@ public class RegistrarCliente extends AppCompatActivity {
         double latitud = Double.parseDouble(txtLatitud.getText().toString());
         double longitud = Double.parseDouble(txtLongitud.getText().toString());
 
+
         // Crear un objeto JSON con los datos
         JSONObject jsonCliente = new JSONObject();
         try {
@@ -141,6 +151,7 @@ public class RegistrarCliente extends AppCompatActivity {
             jsonCliente.put("lat_cliente", latitud);
             jsonCliente.put("long_cliente", longitud);
             jsonCliente.put("correo_cliente", correo);
+            jsonCliente.put("token",lastToken);
         } catch (JSONException e) {
             e.printStackTrace();
         }

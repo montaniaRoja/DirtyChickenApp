@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "286175661304",
+    "project_id": "pollochucoapp",
+    "storage_bucket": "pollochucoapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286175661304:android:6ccfe294ebbb7580fc7f0d",
+        "android_client_info": {
+          "package_name": "com.example.dirtychickenapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJn_CznmnP1KZdcjfJGEscATMWqo95KqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

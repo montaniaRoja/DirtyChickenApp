@@ -2,8 +2,10 @@
     <string name="app_name">DirtyChickenApp</string>
     <string name="ErrorDB">error al guardar los datos localmente</string>
     <string name="ErrorResp">error al guardar localmente</string>
-    <string name="Respuesta">datos de cliente creados</string>
+    <string name="Respuesta">datos de cliente creados base local</string>
     <string name="RespuestaTemp">Bienvenido de Nuevo !!</string>
     <string name="label">Qty</string>
     <string name="etiqueta">Monto Total</string>
+    <string name="msg_token_fmt">Token: %1$s</string>
+    <string name="default_notification_channel_id">mensaje default</string>
 </resources>
