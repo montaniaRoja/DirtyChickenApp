@@ -12,26 +12,33 @@
         android:layout_weight="1"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@android:color/black"
         android:padding="16dp"/>
 
     <TextView
         android:id="@+id/txtPrecioUnitario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:padding="16dp"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtCantidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:padding="16dp"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtPrecioTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:padding="16dp"/>
+        android:textStyle="bold" />
 </LinearLayout>
