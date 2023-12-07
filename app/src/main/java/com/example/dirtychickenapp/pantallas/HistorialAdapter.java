@@ -1,13 +1,18 @@
 package com.example.dirtychickenapp.pantallas;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +39,8 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
         View view=inflater.inflate(R.layout.list_element,null);
         return new HistorialViewHolder(view);
 
+
+
     }
 
     @Override
@@ -47,9 +54,30 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
                 .into(holder.imageView5);
         holder.txtEstado.setText(pedidosEstado.getEstado());
         holder.txtMonto.setText(String.valueOf(pedidosEstado.getTotal()));
+        double latitud= pedidosEstado.getLatitud();
+        double longitud= pedidosEstado.getLongitud();
 
+        holder.btnTrack.setOnClickListener(e->irAmapa(latitud, longitud));
+
+        if (!"en ruta".equals(pedidosEstado.getEstado())) {
+            holder.btnTrack.setEnabled(false);
+
+             holder.btnTrack.setBackgroundColor(ContextCompat.getColor(Hctx, R.color.coloDisabled));
+        } else {
+            holder.btnTrack.setEnabled(true);
+            // Puedes cambiar el color del botón u otras propiedades para indicar que está habilitado
+            // holder.btnTrack.setBackgroundColor(ContextCompat.getColor(Hctx, R.color.colorEnabled));
+        }
 
     }
+
+    private void irAmapa(double lat, double longitud) {
+        Intent intent = new Intent(Hctx, MapActivity.class);
+        intent.putExtra("LATITUD", lat);
+        intent.putExtra("LONGITUD", longitud);
+        Hctx.startActivity(intent);
+    }
+
 
     @Override
     public int getItemCount(){return pedidosEstadoList.size();}
@@ -58,6 +86,8 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
         TextView txtMonto;
         TextView txtEstado;
         ImageView imageView5;
+
+        Button btnTrack;
         public HistorialViewHolder(@NonNull View itemView) {
             super(itemView);
             txtEstado=itemView.findViewById(R.id.txtEstado);
@@ -74,9 +104,11 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
             txtMonto.setFocusable(false);
             txtMonto.setClickable(false);
             txtMonto.setLongClickable(false);
+            btnTrack=itemView.findViewById(R.id.btnTrack);
 
         }
     }
+
 
 
 }

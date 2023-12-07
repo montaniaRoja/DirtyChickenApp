@@ -91,7 +91,9 @@ public class HistorialActivity extends AppCompatActivity {
                                         pedido.getInt("id_pedido"),
                                         pedido.getString("correo"),
                                         pedido.getDouble("total"),
-                                        pedido.getString("estado")
+                                        pedido.getString("estado"),
+                                        pedido.getDouble("latitud"),
+                                        pedido.getDouble("longitud")
 
                                 ));
                             }

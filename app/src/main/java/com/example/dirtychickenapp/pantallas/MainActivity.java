@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
                         String msg = getString(R.string.msg_token_fmt, newToken);
                         Log.d(TAG, msg);
 
-// Agregar un Toast con el mismo mensaje
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        // Agregar un Toast con el mismo mensaje
+                      //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
 
                         // Comparar con el último token almacenado

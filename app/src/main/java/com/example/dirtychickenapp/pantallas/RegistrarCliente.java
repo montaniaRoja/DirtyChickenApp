@@ -61,7 +61,7 @@ public class RegistrarCliente extends AppCompatActivity {
         txtCorreo=findViewById(R.id.txtCorreo);
         txtLatitud=findViewById(R.id.txtLatitud);
         txtLongitud=findViewById(R.id.txtLongitud);
-        btnGuardarCliente=(Button)findViewById(R.id.btnGuardarCliente);
+        btnGuardarCliente=(Button)findViewById(R.id.btnInicio);
         lastToken = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString(LAST_TOKEN_KEY, "");
 
 

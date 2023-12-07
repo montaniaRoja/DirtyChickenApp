@@ -8,7 +8,7 @@
     tools:context=".pantallas.RegistrarCliente">
 
     <Button
-        android:id="@+id/btnGuardarCliente"
+        android:id="@+id/btnInicio"
         style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

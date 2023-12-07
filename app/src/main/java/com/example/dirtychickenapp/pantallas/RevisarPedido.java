@@ -40,7 +40,7 @@ public class RevisarPedido extends AppCompatActivity {
     EditText txtTotal;
     Button btnCancelar, btnConfirmar;
     double totalPedido=0;
-    String estado="recibido";
+    String estado="pendiente";
     String correo;
    // String token;
 
