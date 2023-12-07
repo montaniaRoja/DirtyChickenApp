@@ -2,6 +2,9 @@
 package com.example.dirtychickenapp.pantallas;
 
 
+import static com.example.dirtychickenapp.pantallas.MainActivity.LAST_TOKEN_KEY;
+import static com.example.dirtychickenapp.pantallas.MainActivity.PREFS_NAME;
+
 import android.content.Intent;
 import android.widget.Button;
 import android.os.Bundle;
@@ -39,6 +42,7 @@ public class RevisarPedido extends AppCompatActivity {
     double totalPedido=0;
     String estado="recibido";
     String correo;
+   // String token;
 
     int numeroNeg=-1;
     @Override
@@ -49,6 +53,7 @@ public class RevisarPedido extends AppCompatActivity {
         txtTotal=findViewById(R.id.txtTotal);
         btnCancelar=findViewById(R.id.btnCancelar);
         btnConfirmar=findViewById(R.id.btnConfirmar);
+       // token = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString(LAST_TOKEN_KEY, "");
 
         DetallePedido[] pedidoArray = (DetallePedido[]) Objects.requireNonNull(getIntent().getSerializableExtra("pedidoArray"));
         txtTotal.setText(TotalPedido.getTotal());
@@ -168,12 +173,16 @@ public class RevisarPedido extends AppCompatActivity {
 
         totalPedido=Double.parseDouble(TotalPedido.getTotal());
         correo=MainActivity.clienteMail;
+        String lastToken = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString(LAST_TOKEN_KEY, "");
+        Log.d("el token a enviar es ",lastToken);
+
         JSONObject jsonCliente = new JSONObject();
         try {
 
             jsonCliente.put("correo", correo);
             jsonCliente.put("total", totalPedido);
             jsonCliente.put("estado",estado);
+            jsonCliente.put("token",lastToken);
 
         } catch (JSONException e) {
             e.printStackTrace();

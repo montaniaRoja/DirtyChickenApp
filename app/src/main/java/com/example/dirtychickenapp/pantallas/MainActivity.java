@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         btnCerrar.setOnClickListener(e->cerrarSesion());
         
         btnHistorial.setOnClickListener(e->verHistorial());
-
+        permisos();
         String lastToken = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString(LAST_TOKEN_KEY, "");
        // getCliente();
         FirebaseMessaging.getInstance().getToken()
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, msg);
 
 // Agregar un Toast con el mismo mensaje
-                      //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
 
                         // Comparar con el último token almacenado
@@ -99,19 +99,17 @@ public class MainActivity extends AppCompatActivity {
                             // Guardar el nuevo token en preferencias compartidas
                             getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit().putString(LAST_TOKEN_KEY, newToken).apply();
 
-                            afterTokenObtained();
+
                         }
+
                     }
+
                 });
 
-        getCliente();
+        //getCliente();
     }
 
-    private void afterTokenObtained() {
 
-        permisos();
-
-    }
 
     private void verHistorial() {
         Intent intent = new Intent(MainActivity.this, HistorialActivity.class);
